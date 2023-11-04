@@ -47,5 +47,6 @@ body {
   translate: 0 -50%;
   width: 100vw;
   height: auto;
+  min-height: 100vh;
   transition: transform .3s ease-in-out;
 }

@@ -1,13 +1,16 @@
 import './style.css'
-import {throttle} from 'lodash'
 
 const runApp = () => {
   const app = document.querySelector('#app')
   const slides = app?.querySelector('.slides')
-  
-  const effectDuration = 300
+  const slideElements = slides?.querySelectorAll('.slide')
 
-  // const activeSlide = 0
+  if (!app || !slides || !slideElements)
+    throw new Error("HTML Elements are missing...")
+
+  const effectDuration = 300
+  let currentSlide: number = 0
+  const slidesAmount = Array.from(slideElements).length
 
   const triggerEffect = () => {
     slides?.classList.add('is-scrolling')
@@ -15,32 +18,32 @@ const runApp = () => {
   }
 
   const goToNext = (isReverse: boolean = false, behavior: ScrollBehavior = 'smooth') => {
-    // TODO: set hard breakpoints instead of scrollY
-    const { scrollY: y, innerHeight: h } = window
-    const top = isReverse ? y - h : y + h
+    const { innerHeight } = window    
     
-    // TODO: Filter if it's not firstSlide or lastSlide
-    triggerEffect()
+    if (isReverse && currentSlide > 0 ) currentSlide--
+    if (!isReverse && slidesAmount > currentSlide) currentSlide++
+    const top = currentSlide * innerHeight
+
+    if (!!currentSlide && currentSlide !== slidesAmount) triggerEffect()
     window.scroll({ top, behavior })
   }
 
-  const animate = (event: KeyboardEvent) => {
-    const { code, type } = event
-    const keysToDisable = ['ArrowUp', 'ArrowDown']
+  const animate = (e: KeyboardEvent | MouseEvent) => {
+    if (e instanceof MouseEvent) return goToNext()
 
-    // TODO: Fix
-    type === 'scroll' && event.preventDefault()
-    keysToDisable.includes(code) && event.preventDefault()
+    const { code } = e 
+    const keys = ['ArrowUp', 'ArrowDown']
 
-    code === 'KeyA' && goToNext(true)
-    code === 'KeyS' && goToNext()
-    code === 'ArrowUp' && goToNext(true)
-    code === 'ArrowDown' && goToNext()
+    if (keys.includes(code)) e.preventDefault()
+    if (code === keys[0]) goToNext(true)
+    if (code === keys[1]) goToNext()
   }
 
-  const throttledAnimate = throttle(animate, effectDuration);
-  window.onkeydown = throttledAnimate
-  window.onscroll = throttledAnimate
+  // TODO: Handle animation on scroll
+  const disableScroll = (e: MouseEvent) => e.preventDefault()
+  window.addEventListener('wheel', disableScroll, { passive: false })
+  window.onkeydown = animate
+  window.onclick = animate
 }
 
 
