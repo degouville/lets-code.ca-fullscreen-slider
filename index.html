@@ -9,13 +9,33 @@
   <body>
     <!-- TODO: Make the loop infinite -->
     <div id="app">
+      <div class="inscrutions">
+        <button class="reset">← Go back</button>
+        <p class="scroll">↓ Scrool or Drag ↓</p>
+        <p class="floating-text">+ discover more</p>
+      </div>
+      <div class="links">
+        <div class="link is-active">Stronger</div>
+        <div class="link">No choice</div>
+        <div class="link">Ownen no longer</div>
+        <div class="link">Assert control</div>
+        <div class="link">Cold & Detached</div>
+      </div>
       <div class="slides">
         <div class="slide"><img src="./public/imgs/montreal1.jpg"/></div>
         <div class="slide"><img src="./public/imgs/montreal2.jpg"/></div>
         <div class="slide"><img src="./public/imgs/montreal3.jpg"/></div>
         <div class="slide"><img src="./public/imgs/montreal4.jpg"/></div>
         <div class="slide"><img src="./public/imgs/montreal5.jpg"/></div>
-        <div class="slide last"></div>
+        <div class="last">
+          <div class="content">
+            <img src="./public/imgs/montreal5.jpg">
+            <div class="text">
+              <h2>OldPort Montreal</h2>
+              <p>We need a transmutation. One we all conceive. We need a revolution. So long as we stay free.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

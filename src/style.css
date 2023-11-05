@@ -14,23 +14,86 @@
   -webkit-text-size-adjust: 100%;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box }
 
 body {
   margin: 0;
   padding: 0;
 }
 
-.slides {
+.links {
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  padding: 1em;
+}
+
+.links .link{
+  position: relative;
+  padding: .25em 1em;
+  font-size: .75em;
+  text-transform: uppercase;
+  color: #FFF9;
+}
+
+  .inscrutions {
+    position: fixed;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    font-size: .5em;
+    text-transform: uppercase;
+  }
+  .inscrutions .reset{
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    background: none;
+    border: none;
+  }
+  .inscrutions .scroll{
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+    bottom: 0em;
+  }
+  .inscrutions .floating-text{
+    display: none;
+    position: absolute;
+    z-index: 3;
+  }
+
+.links .link:after{
+  content: '';
+  position: absolute;
+  width: 0em;
+  height: .1em;
+  right: 11.25em;
+  top: 50%;
+  background: #FFF5;
+  transition: all 1s;
+}
+
+.links .link.is-active:after{
+  width: 2em;
+  background: #FFF;
+}
+
+
+.links .link.is-active{
+  transition: color 1s;
+  color: #FFF;
+}
+
+  .slides {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.is-scrolling > .slide > img { transform: scaleY(1.5) }
+.is-scrolling .slide > img { transform: scaleY(1.5) }
 
 .slide {
   position: relative;
@@ -49,4 +112,44 @@ body {
   height: auto;
   min-height: 100vh;
   transition: transform .3s ease-in-out;
+}
+
+.last {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;  
+  height: 100vh;  
+}
+
+.last .content {
+  display: flex;
+}
+
+.last .content > img {
+  display: block;
+  width: 10em;
+  height: calc(10em * 4 / 3);
+}
+
+.last .content .text {
+  display: flex;
+  flex-direction: column;
+  width: 10em;
+  max-height: 13.5em;
+  padding: 0 0 0 1em;
+  font-weight: 300;
+}
+
+.last .content .text h2 {
+  font-size: 2em;
+  line-height: 1;
+  margin: 0;
+  font-weight: 200;
+}
+
+.last .content .text p {
+  opacity: .7;
+  font-size: .5em;
+  text-transform: uppercase;
 }

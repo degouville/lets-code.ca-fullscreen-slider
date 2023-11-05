@@ -1,20 +1,30 @@
 import './style.css'
 
 const runApp = () => {
-  const app = document.querySelector('#app')
-  const slides = app?.querySelector('.slides')
-  const slideElements = slides?.querySelectorAll('.slide')
+  const app = document.querySelector('#app') as HTMLElement
+  const resetButton = document.querySelector('.reset') as HTMLElement
+  const slides = app.querySelector('.slides') as HTMLElement
+  const slideElements = slides.querySelectorAll('.slide') as NodeListOf<HTMLElement>
+  const links = app.querySelector('.links') as HTMLElement
+  const linkElements = links.querySelectorAll('.link') as NodeListOf<HTMLElement>
+  const floatingText = document.querySelector('.floating-text') as HTMLElement
 
-  if (!app || !slides || !slideElements)
-    throw new Error("HTML Elements are missing...")
 
   const effectDuration = 300
-  let currentSlide: number = 0
   const slidesAmount = Array.from(slideElements).length
+  let currentSlide: number = 0
 
   const triggerEffect = () => {
-    slides?.classList.add('is-scrolling')
-    setTimeout(() => { slides?.classList.remove('is-scrolling') }, effectDuration)
+    slides.classList.add('is-scrolling')
+    setTimeout(() => slides.classList.remove('is-scrolling'), effectDuration)
+  }
+
+  const updateLinks = () => {
+    const isActive = app.querySelector('.is-active') as HTMLElement
+    const currentLink = Array.from(linkElements)[currentSlide]
+
+    isActive.classList.remove('is-active')
+    currentLink.classList.add('is-active')
   }
 
   const goToNext = (isReverse: boolean = false, behavior: ScrollBehavior = 'smooth') => {
@@ -22,16 +32,16 @@ const runApp = () => {
     
     if (isReverse && currentSlide > 0 ) currentSlide--
     if (!isReverse && slidesAmount > currentSlide) currentSlide++
-    const top = currentSlide * innerHeight
-
     if (!!currentSlide && currentSlide !== slidesAmount) triggerEffect()
-    window.scroll({ top, behavior })
+    updateLinks()
+
+    window.scroll({ top: currentSlide * innerHeight, behavior })
   }
 
   const animate = (e: KeyboardEvent | MouseEvent) => {
     if (e instanceof MouseEvent) return goToNext()
 
-    const { code } = e 
+    const { code } = e
     const keys = ['ArrowUp', 'ArrowDown']
 
     if (keys.includes(code)) e.preventDefault()
@@ -39,12 +49,26 @@ const runApp = () => {
     if (code === keys[1]) goToNext()
   }
 
+  const moveMouseText = (e: MouseEvent) => {
+    floatingText.style.display = 'block';
+    floatingText.style.left = `${e.screenX + 20}px`;
+    floatingText.style.top = `${e.screenY - 95}px`;
+  }
+
+  const reset = () => {
+    currentSlide = 0
+    goToNext(true)
+  }
+  const resetFinally = () => setTimeout(reset, 0)
+
+
   // TODO: Handle animation on scroll
   const disableScroll = (e: MouseEvent) => e.preventDefault()
   window.addEventListener('wheel', disableScroll, { passive: false })
+  window.onmousemove = moveMouseText
   window.onkeydown = animate
   window.onclick = animate
+  resetButton.addEventListener('click', resetFinally)
 }
-
 
 window.onload = runApp
