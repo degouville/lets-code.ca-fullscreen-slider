@@ -53,8 +53,8 @@ const runApp = () => {
 
   const moveMouseText = (e: MouseEvent) => {
     floatingText.style.display = 'block';
-    floatingText.style.left = `${e.screenX + 20}px`;
-    floatingText.style.top = `${e.screenY - 75}px`;
+    floatingText.style.left = `${e.screenX + 10}px`;
+    floatingText.style.top = `${e.screenY - 65}px`;
   }
 
   const reset = () => {
