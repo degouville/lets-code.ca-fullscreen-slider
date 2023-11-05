@@ -1,4 +1,5 @@
 import './style.css'
+import {throttle} from 'lodash'
 
 const runApp = () => {
   const app = document.querySelector('#app') as HTMLElement
@@ -23,8 +24,8 @@ const runApp = () => {
     const isActive = app.querySelector('.is-active') as HTMLElement
     const currentLink = Array.from(linkElements)[currentSlide]
 
-    isActive.classList.remove('is-active')
-    currentLink.classList.add('is-active')
+    isActive?.classList.remove('is-active')
+    currentLink?.classList.add('is-active')
   }
 
   const goToNext = (isReverse: boolean = false, behavior: ScrollBehavior = 'smooth') => {
@@ -38,11 +39,12 @@ const runApp = () => {
     window.scroll({ top: currentSlide * innerHeight, behavior })
   }
 
-  const animate = (e: KeyboardEvent | MouseEvent) => {
+  const animate = (e: KeyboardEvent | MouseEvent | WheelEvent) => {
+    if (e instanceof WheelEvent) return e.deltaY > 0 ? goToNext() : goToNext(true)
     if (e instanceof MouseEvent) return goToNext()
 
     const { code } = e
-    const keys = ['ArrowUp', 'ArrowDown']
+    const keys = ['ArrowUp', 'ArrowDown', 'Space']
 
     if (keys.includes(code)) e.preventDefault()
     if (code === keys[0]) goToNext(true)
@@ -63,8 +65,8 @@ const runApp = () => {
 
 
   // TODO: Handle animation on scroll
-  const disableScroll = (e: MouseEvent) => e.preventDefault()
-  window.addEventListener('wheel', disableScroll, { passive: false })
+  window.addEventListener('wheel', e => e.preventDefault(), {passive: false})
+  window.addEventListener('wheel', throttle(animate, 1000))
   window.onmousemove = moveMouseText
   window.onkeydown = animate
   window.onclick = animate
