@@ -37,32 +37,32 @@ body {
   color: #FFF9;
 }
 
-  .inscrutions {
-    position: fixed;
-    z-index: 3;
-    width: 100vw;
-    height: 100vh;
-    font-size: .5em;
-    text-transform: uppercase;
-  }
-  .inscrutions .reset{
-    position: absolute;
-    top: 1em;
-    left: 1em;
-    background: none;
-    border: none;
-  }
-  .inscrutions .scroll{
-    position: absolute;
-    left: 50%;
-    translate: -50%;
-    bottom: 0em;
-  }
-  .inscrutions .floating-text{
-    display: none;
-    position: absolute;
-    z-index: 3;
-  }
+.inscrutions {
+  position: fixed;
+  z-index: 3;
+  width: 100vw;
+  height: 100vh;
+  font-size: .5em;
+  text-transform: uppercase;
+}
+.inscrutions .reset{
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  background: none;
+  border: none;
+}
+.inscrutions .scroll{
+  position: absolute;
+  left: 50%;
+  translate: -50%;
+  bottom: 0em;
+}
+.inscrutions .floating-text{
+  display: none;
+  position: absolute;
+  z-index: 3;
+}
 
 .links .link:after{
   content: '';
