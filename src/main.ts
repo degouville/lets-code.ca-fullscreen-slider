@@ -31,7 +31,7 @@ const runApp = () => {
   const goToNext = (isReverse: boolean = false, behavior: ScrollBehavior = 'smooth') => {
     const { innerHeight } = window    
     
-    if (isReverse && currentSlide > 0 ) currentSlide--
+    if (isReverse && currentSlide > 0) currentSlide--
     if (!isReverse && slidesAmount > currentSlide) currentSlide++
     if (!!currentSlide && currentSlide !== slidesAmount) triggerEffect()
     updateLinks()
@@ -40,7 +40,7 @@ const runApp = () => {
   }
 
   const animate = (e: KeyboardEvent | MouseEvent | WheelEvent) => {
-    if (e instanceof WheelEvent) return e.deltaY > 0 ? goToNext() : goToNext(true)
+    if (e instanceof WheelEvent) return goToNext(e.deltaY < 0)
     if (e instanceof MouseEvent) return goToNext()
 
     const { code } = e
