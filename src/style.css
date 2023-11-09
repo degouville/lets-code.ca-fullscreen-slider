@@ -62,6 +62,7 @@ body {
   display: none;
   position: absolute;
   z-index: 3;
+  transition: transform .125s linear;
 }
 
 .links .link:after{
@@ -115,10 +116,9 @@ body {
   transition: transform .3s ease-in-out;
 }
 
-.slides .overlay {
-  width: 100vw;  
+.slides .slide.overlay {
   height: 100vh;
-  background: #f003;
+  background: transparent;
 }
 
 .main {
