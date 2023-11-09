@@ -75,27 +75,28 @@ body {
   transition: all 1s;
 }
 
-.links .link.is-active:after{
-  width: 2em;
-  background: #FFF;
-}
-
-
 .links .link.is-active{
   transition: color 1s;
   color: #FFF;
 }
 
-  .slides {
+.links .link.is-active:after{
+  width: 2em;
+  background: #FFF;
+}
+
+.slides {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.is-scrolling .slide > img { transform: scaleY(1.5) }
+.slides.is-scrolling .slide img { transform: scaleY(1.5) }
 
-.slide {
+.slides .slide {
   position: relative;
   overflow: hidden;
   width: 100vw;
@@ -104,7 +105,7 @@ body {
   background-size: cover;
 }
 
-.slide > img {
+.slides .slide img {
   position: absolute;
   top: 50%;
   translate: 0 -50%;
@@ -114,25 +115,35 @@ body {
   transition: transform .3s ease-in-out;
 }
 
-.last {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.slides .overlay {
+  width: 100vw;  
+  height: 100vh;
+  background: #f003;
+}
+
+.main {
+  position: fixed;
+  top: 0;
+  z-index: 0;
   width: 100vw;  
   height: 100vh;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.last .content {
+.main .content {
   display: flex;
 }
 
-.last .content > img {
+.main .content img {
   display: block;
   width: 10em;
   height: calc(10em * 4 / 3);
 }
 
-.last .content .text {
+
+.main .content .text {
   display: flex;
   flex-direction: column;
   width: 10em;
@@ -141,14 +152,15 @@ body {
   font-weight: 300;
 }
 
-.last .content .text h2 {
+
+.main .content .text h2 {
   font-size: 2em;
   line-height: 1;
   margin: 0;
   font-weight: 200;
 }
 
-.last .content .text p {
+.main .content .text p {
   opacity: .7;
   font-size: .5em;
   text-transform: uppercase;
