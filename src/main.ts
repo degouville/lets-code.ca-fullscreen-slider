@@ -1,5 +1,5 @@
 import './style.css'
-import {throttle} from 'lodash'
+import throttle from 'lodash.throttle'
 
 const runApp = () => {
   const app = document.querySelector('#app') as HTMLElement
