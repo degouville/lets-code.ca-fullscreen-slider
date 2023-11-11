@@ -86,6 +86,11 @@ const runApp = () => {
     goToNext(true)
   }
   const resetFinally = () => setTimeout(reset, 0)
+  const setPortraitMode = () => {
+    window.innerWidth / window.innerHeight < 4 / 3
+      ? slides.classList.add('is-portrait')
+      : slides.classList.remove('is-portrait')
+  }
 
   // TODO: Find a remove throttle and just block any event while animate() is running
   // window.addEventListener('wheel', e => {
@@ -101,6 +106,7 @@ const runApp = () => {
   window.onkeydown = animate
   window.onclick = animate
   resetButton.addEventListener('click', resetFinally)
+  window.onresize = setPortraitMode
 }
 
 window.onload = runApp
