@@ -94,6 +94,7 @@ body {
   justify-content: center;
   align-items: center;
   bottom: 0em;
+  transform: translateY(500vh);
   transition: transform .500s ease-in-out;
 }
 
