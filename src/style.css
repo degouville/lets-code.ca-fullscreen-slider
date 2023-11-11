@@ -97,7 +97,7 @@ body {
   transition: transform .500s ease-in-out;
 }
 
-.slides.is-scrolling .slide img { transform: scaleY(1.5) }
+.slides.is-scrolling .slide img { transform: scaleY(2) }
 
 .slides .slide {
   position: relative;
@@ -108,14 +108,13 @@ body {
   background-size: cover;
 }
 
-/* TODO: Fix img ratio on portrait mode */
 .slides .slide img {
   position: absolute;
   top: 50%;
   translate: 0 -50%;
-  width: 100vw;
-  height: auto;
-  min-height: 100vh;
+  width: auto; /* 🤦🏾‍♂️ */
+  height: 100vh;
+  clip-path: inset(0);
   transition: transform .3s ease-in-out;
 }
 
