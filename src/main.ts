@@ -1,9 +1,6 @@
 import './style.css'
 import throttle from 'lodash.throttle'
 
-// NOTE: Force-bypass the 1st Overlay
-window.scroll({ top: window.innerHeight, behavior: 'instant' })
-
 const runApp = () => {
   const app = document.querySelector('#app') as HTMLElement
   const resetButton = document.querySelector('.reset') as HTMLElement
@@ -32,14 +29,15 @@ const runApp = () => {
     currentLink?.classList.add('is-active')
   }
 
-  const reload = (top: number = 0, behavior: ScrollBehavior = 'instant') => {
+  const reload = () => {
     console.info('%cRun it back Turbooo ∞💫', 'color: yellow')
     currentSlide = 0
-    window.scroll({ top, behavior })
+    slides.style.transition = 'none'
+    slides.style.transform = 'translateY(600vh)'
+    setTimeout(() => slides.style.transition = '', effectDuration)
   }
 
-  const goToNext = (isReverse: boolean = false, behavior: ScrollBehavior = 'smooth') => {
-    const { innerHeight } = window
+  const goToNext = (isReverse: boolean = false) => {
     const isFirst = currentSlide >= 1
     
     if (isReverse && isFirst) currentSlide--
@@ -50,9 +48,12 @@ const runApp = () => {
     if (!isOverlay) triggerEffect()
 
     updateLinks()
+    
+    // TODO: make this mapped with slides
+    const vh = ((slidesAmount - 1) - currentSlide) * 100
 
-    window.scroll({ top: currentSlide * innerHeight, behavior })
-    if (isLast) setTimeout(reload, effectDuration * 3)
+    slides.style.transform = `translateY(${ vh }vh)`
+    if (isLast) setTimeout(reload, effectDuration * 2)
   }
 
   const animate = (e: KeyboardEvent | MouseEvent | WheelEvent) => {
