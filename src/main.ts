@@ -11,8 +11,9 @@ const runApp = () => {
   const floatingText = document.querySelector('.floating-text') as HTMLElement
 
 
-  const effectDuration = 300
-  const slidesAmount = Array.from(slideElements).length
+  const effectDuration: number = 300
+  let isAnimating: boolean = false
+  const slidesAmount: number = Array.from(slideElements).length
   let currentSlide: number = 1 // TODO: use state for the slides
 
   const triggerEffect = () => {
@@ -30,11 +31,12 @@ const runApp = () => {
   }
 
   const reload = () => {
-    console.info('%cRun it back Turbooo ∞💫', 'color: yellow')
+    const time = new Date().toLocaleTimeString()
+    console.info(`%c ${time}: Run it back Turbooo ∞💫`, 'color: yellow')
     currentSlide = 0
     slides.style.transition = 'none'
     slides.style.transform = 'translateY(600vh)'
-    setTimeout(() => slides.style.transition = '', effectDuration)
+    setTimeout(() => slides.style.transition = '', effectDuration * .1)
   }
 
   const goToNext = (isReverse: boolean = false) => {
@@ -53,10 +55,14 @@ const runApp = () => {
     const vh = ((slidesAmount - 1) - currentSlide) * 100
 
     slides.style.transform = `translateY(${ vh }vh)`
-    if (isLast) setTimeout(reload, effectDuration * 2)
+    if (isLast) setTimeout(reload, effectDuration)
   }
 
   const animate = (e: KeyboardEvent | MouseEvent | WheelEvent) => {
+    if (isAnimating) return
+    isAnimating = true
+    setTimeout(() => isAnimating = false, effectDuration)
+
     if (e instanceof WheelEvent) return goToNext(e.deltaY < 0)
     if (e instanceof MouseEvent) return goToNext()
 
@@ -81,8 +87,15 @@ const runApp = () => {
   }
   const resetFinally = () => setTimeout(reset, 0)
 
-  window.addEventListener('wheel', e => e.preventDefault(), {passive: false})
   // TODO: Find a remove throttle and just block any event while animate() is running
+  // window.addEventListener('wheel', e => {
+  //   if (!isAnimating) return
+  //   isAnimating = true
+  //   setTimeout(() => isAnimating = false, 1000)
+
+  //   animate(e)
+  // })
+  window.addEventListener('wheel', e => e.preventDefault() , { passive: false })
   window.addEventListener('wheel', throttle(animate, effectDuration * 3))
   window.onmousemove = moveMouseText
   window.onkeydown = animate
