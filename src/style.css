@@ -95,10 +95,10 @@ body {
   align-items: center;
   bottom: 0em;
   transform: translateY(500vh);
-  transition: transform .500s ease-in-out;
+  transition: transform .5s ease-in-out;
 }
 
-.slides.is-scrolling .slide img { transform: scaleY(2) }
+.slides.is-scrolling .slide img { transform: scaleY(1.5) }
 
 .slides .slide {
   position: relative;

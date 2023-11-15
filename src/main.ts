@@ -23,8 +23,12 @@ const runApp = () => {
 
   const updateLinks = () => {
     const isActive = app.querySelector('.is-active') as HTMLElement
-    // TODO: improve this with status value
-    const currentLink = Array.from(linkElements)[currentSlide - 1] 
+
+    // NOTE: We use '- 1' here because there's an offset with slides due to the use of the 1st .overlay div 
+    // ...which is a transparent slide made only to prepare the infinite loop effect
+    // TODO: improve this by using a state manager for the active links
+    const currentLink = Array.from(linkElements)[currentSlide - 1]
+
     // TODO: Make those links clickable to their targets
     isActive?.classList.remove('is-active')
     currentLink?.classList.add('is-active')
@@ -33,9 +37,9 @@ const runApp = () => {
   const reload = () => {
     const time = new Date().toLocaleTimeString()
     console.info(`%c ${time}: Run it back Turbooo ∞💫`, 'color: yellow')
-    currentSlide = 0
-    slides.style.transition = 'none'
-    slides.style.transform = 'translateY(600vh)'
+    currentSlide = 0 // NOTE: Here we go to the 1st .overlay while the user thinks it's still the last slide
+    slides.style.transition = 'none' // NOTE: Here's the trick as we move every slides like Flash Gordon ⚡🏃🏾‍♂️💨⚡
+    slides.style.transform = 'translateY(600vh)' // Set this dynamically with the futur linksMapping
     setTimeout(() => slides.style.transition = '', effectDuration * .1)
   }
 
@@ -85,9 +89,10 @@ const runApp = () => {
     currentSlide = 2
     goToNext(true)
   }
-  const resetFinally = () => setTimeout(reset, 0)
-  const setPortraitMode = () => {
-    window.innerWidth / window.innerHeight < 4 / 3
+  const delayReset = () => setTimeout(reset, 0)
+
+  const togglePortraitMode = () => {
+    window.innerWidth / window.innerHeight < 16 / 9
       ? slides.classList.add('is-portrait')
       : slides.classList.remove('is-portrait')
   }
@@ -105,8 +110,8 @@ const runApp = () => {
   window.onmousemove = moveMouseText
   window.onkeydown = animate
   window.onclick = animate
-  resetButton.addEventListener('click', resetFinally)
-  window.onresize = setPortraitMode
+  resetButton.addEventListener('click', delayReset)
+  window.onresize = togglePortraitMode
 }
 
 window.onload = runApp
