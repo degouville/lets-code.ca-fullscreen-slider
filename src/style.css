@@ -95,10 +95,10 @@ body {
   align-items: center;
   bottom: 0em;
   transform: translateY(500vh);
-  transition: transform .5s ease-in-out;
+  transition: transform 1s ease-in-out;
 }
 
-.slides.is-scrolling .slide img { transform: scaleY(1.5) }
+.slides.is-scrolling .slide img { transform: scaleY(1.3) }
 
 .slides .slide {
   position: relative;
@@ -116,7 +116,7 @@ body {
   width: 100vw;
   height: auto;
   clip-path: inset(0);
-  transition: transform .3s ease-in-out;
+  transition: transform .5s ease-in-out;
 }
 
 .slides.is-portrait .slide img {

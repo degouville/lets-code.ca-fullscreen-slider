@@ -11,7 +11,7 @@ const runApp = () => {
   const floatingText = document.querySelector('.floating-text') as HTMLElement
 
 
-  const effectDuration: number = 300
+  const effectDuration: number = 500
   let isAnimating: boolean = false
   const slidesAmount: number = Array.from(slideElements).length
   let currentSlide: number = 1 // TODO: use state for the slides
