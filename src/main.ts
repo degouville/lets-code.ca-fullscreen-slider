@@ -18,7 +18,7 @@ const runApp = () => {
 
   const triggerEffect = () => {
     slides.classList.add('is-scrolling')
-    setTimeout(() => slides.classList.remove('is-scrolling'), effectDuration)
+    setTimeout(() => slides.classList.remove('is-scrolling'), effectDuration * 1.5)
   }
 
   const updateLinks = () => {
@@ -59,7 +59,7 @@ const runApp = () => {
     const vh = ((slidesAmount - 1) - currentSlide) * 100
 
     slides.style.transform = `translateY(${ vh }vh)`
-    if (isLast) setTimeout(reload, effectDuration)
+    if (isLast) setTimeout(reload, effectDuration * 3)
   }
 
   const animate = (e: KeyboardEvent | MouseEvent | WheelEvent) => {
